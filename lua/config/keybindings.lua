@@ -1,5 +1,5 @@
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set("v", "<leader>yc", "\"+y")
+vim.keymap.set("v", "<leader>yc", '"+y')
 vim.keymap.set("n", "<leader>us", "<cmd>e!<CR>")
 vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>")
 
@@ -13,10 +13,14 @@ vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
 vim.keymap.set("n", "<leader>sh", ":sp | enew<CR>")
 vim.keymap.set("n", "<leader>sv", ":vsp | enew<CR>")
 
+-- Quickfix list
+vim.keymap.set("n", "gj", "<cmd>cnext<CR>")
+vim.keymap.set("n", "gk", "<cmd>cprev<CR>")
+
 -- Disable arrow keys
-vim.api.nvim_set_keymap('n', '<Up>', '', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Down>', '', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Left>', '', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Right>', '', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Up>", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Down>", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Left>", "", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Right>", "", { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>err", "o if err != nil {\n}<Esc>O")
