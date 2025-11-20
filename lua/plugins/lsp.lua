@@ -108,9 +108,15 @@ return {
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 					vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
 					vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-					vim.keymap.set("n", "<leader>eq", vim.diagnostic.setloclist, { desc = "Show diagnostic" })
-					vim.keymap.set("n", "<leader>ep", vim.diagnostic.goto_prev, {})
-					vim.keymap.set("n", "<leader>en", vim.diagnostic.goto_next, {})
+					vim.keymap.set("n", "<leader>eq", function()
+						vim.diagnostic.setqflist({ open = true })
+						vim.cmd("wincmd k")
+						if #vim.fn.getqflist() > 0 then
+							vim.cmd("cfirst")
+						else
+							print("No diagnostics found")
+						end
+					end, { desc = "Show diagnostic" })
 				end,
 			})
 		end,
