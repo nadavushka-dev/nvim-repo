@@ -1,6 +1,6 @@
 return {
 	{
-		dir = "~/nvim_repo/lua/floater.nvim/",
+		dir = "~/code/nvim_repo/lua/floater.nvim/",
 		config = function()
 			local floater = require("floater")
 			vim.keymap.set({ "n", "t" }, "<leader>tt", floater.terminal)
