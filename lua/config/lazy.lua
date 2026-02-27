@@ -30,6 +30,7 @@ require("lazy").setup({
 		require("plugins.navigation"),
 		require("plugins.markdown"),
 		require("plugins.ui"),
+		require("plugins.ai"),
 		require("plugins.nonesense"),
 	},
 	-- Configure any other settings here. See the documentation for more details.
