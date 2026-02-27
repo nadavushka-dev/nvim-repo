@@ -1,17 +1,40 @@
 return {
 	{
-		"supermaven-inc/supermaven-nvim",
+		"github/copilot.vim",
 		config = function()
-			require("supermaven-nvim").setup({
-				keymaps = {
-					accept_suggestion = "<C-a>",
-					clear_suggestion = "<C-]>",
-					accept_word = "<C-w>",
-				},
-				ignore_filetypes = { markdown = true },
+			vim.keymap.set("i", "<C-a>", 'copilot#Accept("\\<CR>")', {
+				expr = true,
+				replace_keycodes = false,
+				desc = "Accept Copilot suggestion",
+			})
+			vim.g.copilot_no_tab_map = true
+
+			vim.keymap.set("i", "gn", function()
+				vim.fn["copilot#Next"]()
+			end, {
+				desc = "Next Copilot suggestion",
+			})
+
+			vim.keymap.set("i", "gp", function()
+				vim.fn["copilot#Previous"]()
+			end, {
+				desc = "Previous Copilot suggestion",
 			})
 		end,
 	},
+	-- {
+	-- 	"supermaven-inc/supermaven-nvim",
+	-- 	config = function()
+	-- 		require("supermaven-nvim").setup({
+	-- 			keymaps = {
+	-- 				accept_suggestion = "<C-a>",
+	-- 				clear_suggestion = "<C-]>",
+	-- 				accept_word = "<C-w>",
+	-- 			},
+	-- 			ignore_filetypes = { markdown = true },
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"NickvanDyke/opencode.nvim",
 		dependencies = {
