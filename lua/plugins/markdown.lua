@@ -1,7 +1,7 @@
 return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
-		enable = false,
+		lazy = true,
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
 		---@module 'render-markdown'
 		---@type render.md.UserConfig
@@ -45,7 +45,7 @@ return {
 					name = "telescope.nvim",
 				},
 
-				ui = { enable = true },
+				ui = { enabled = true },
 			})
 
 			-- Keymaps using direct function calls

@@ -67,6 +67,13 @@ return {
 						return conf
 					end,
 				},
+				view_options = {
+					show_hidden = true,
+					is_hidden_file = function(name, bufnr)
+						local m = name:match("^%.")
+						return m ~= nil
+					end,
+				},
 			})
 
 			vim.keymap.set("n", "<leader><leader>-", function()
@@ -93,18 +100,18 @@ return {
 					mappings = {
 						i = {
 							["<C-d>"] = actions.delete_buffer,
-							["<ScrollWheelDown>"] = false,
-							["<ScrollWheelUp>"] = false,
-							["<LeftMouse>"] = false,
-							["<RightMouse>"] = false,
+							["<ScrollWheelDown>"] = actions.nop(),
+							["<ScrollWheelUp>"] = actions.nop(),
+							["<LeftMouse>"] = actions.nop(),
+							["<RightMouse>"] = actions.nop(),
 						},
 						n = {
 							["<C-d>"] = actions.delete_buffer,
 							["dd"] = actions.delete_buffer,
-							["<ScrollWheelDown>"] = false,
-							["<ScrollWheelUp>"] = false,
-							["<LeftMouse>"] = false,
-							["<RightMouse>"] = false,
+							["<ScrollWheelDown>"] = actions.nop(),
+							["<ScrollWheelUp>"] = actions.nop(),
+							["<LeftMouse>"] = actions.nop(),
+							["<RightMouse>"] = actions.nop(),
 						},
 					},
 					previewer = true,
