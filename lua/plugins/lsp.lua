@@ -48,18 +48,40 @@ return {
 				ensure_installed = {
 					"lua_ls",
 					"ts_ls",
+					"eslint",
 					"html",
 					"gopls",
 					"bashls",
 					"jsonls",
 					"cssls",
 					"dockerls",
+					"sqls",
 				},
 				automatic_installation = true,
 				handlers = {
 					function(server_name)
 						require("lspconfig")[server_name].setup({
 							capabilities = capabilities,
+						})
+					end,
+					sqls = function()
+						require("lspconfig").sqls.setup({
+							capabilities = capabilities,
+							on_attach = function(client)
+								client.server_capabilities.documentFormattingProvider = false
+								client.server_capabilities.documentRangeFormattingProvider = false
+							end,
+						})
+					end,
+					eslint = function()
+						require("lspconfig").eslint.setup({
+							capabilities = capabilities,
+							settings = {
+								workingDirectory = {
+									mode = "auto",
+								},
+							},
+							filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 						})
 					end,
 				},
@@ -76,6 +98,7 @@ return {
 					"stylua",
 					"prettier",
 					"goimports",
+					"eslint",
 				},
 				auto_update = false,
 				run_on_start = false,
@@ -105,9 +128,13 @@ return {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(ev)
 					local opts = { buffer = ev.buf }
+
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 					vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
 					vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+					vim.keymap.set("n", "<leader>ef", function()
+						vim.cmd("LspEslintFixAll")
+					end, vim.tbl_extend("force", opts, { desc = "ESLint fix all" }))
 					vim.keymap.set("n", "<leader>eq", function()
 						vim.diagnostic.setqflist({ open = true })
 						vim.cmd("wincmd k")
@@ -129,7 +156,7 @@ return {
 			{
 				"<leader>fd",
 				function()
-					require("conform").format({ async = true, lsp_fallback = true })
+					require("conform").format({ async = true, lsp_fallback = vim.bo.filetype ~= "sql" })
 				end,
 				desc = "Format document",
 			},
@@ -152,10 +179,15 @@ return {
 					bash = { "beautysh" },
 					zsh = { "beautysh" },
 				},
-				format_on_save = {
-					timeout_ms = 500,
-					lsp_fallback = true,
-				},
+				format_on_save = function(bufnr)
+					if vim.bo[bufnr].filetype == "sql" then
+						return false
+					end
+					return {
+						timeout_ms = 500,
+						lsp_fallback = true,
+					}
+				end,
 			})
 		end,
 	},
